@@ -1,6 +1,6 @@
-# AWS PCI DSS v4.0.1 Continuous Compliance Lab — End‑to‑End Guide (TWN‑Style Toolkit)
+# AWS PCI DSS v4.0.1 Continuous Compliance Lab — End‑to‑End Guide
 
-This is a **full lab** that demonstrates how to operationalize **PCI DSS v4.0.1** in a **SaaS‑style AWS account** using a focused toolkit aligned with the **TechWorld‑with‑Nana (TWN) Demo Projects** stack — i.e., **AWS CLI, Terraform, Docker, Jenkins, and Python (Boto3)** — plus a tiny amount of AWS‑native services (**AWS Config, Security Hub, CloudTrail, EventBridge, Lambda**) only where absolutely necessary.
+This is a **full lab** that demonstrates how to operationalize **PCI DSS v4.0.1** in a **SaaS‑style AWS account** using a focused toolkit aligned with the **DevOps tools** stack — i.e., **AWS CLI, Terraform, Docker, Jenkins, and Python (Boto3)** — plus a tiny amount of AWS‑native services (**AWS Config, Security Hub, CloudTrail, EventBridge, Lambda**) only where absolutely necessary.
 
 > Why this lab?  
 > Hiring managers want proof you can **translate control intent → technical guardrails → continuous evidence**. This lab gives you exactly that: infra as code, guardrails as code, and **automated, auditable artifacts** that map to selected PCI DSS v4.0.1 requirements (focus on **Req. 1, 2, 7, 8, 10, 11, 12**).
@@ -22,7 +22,7 @@ This is a **full lab** that demonstrates how to operationalize **PCI DSS v4.0.1*
 |   ├─ EventBridge -> Lambda (daily snapshot to S3)            |
 |   └─ Manual Python Collector (MFA, IAM Policies, CloudTrail) |
 |                                                              |
-|  CI (optional, TWN-style)                                    |
+|  CI (optional, DevOps-style)                                    |
 |   └─ GitHub Actions or Jenkins → Lint & run collectors       |
 +--------------------------------------------------------------+
 ```
@@ -35,11 +35,11 @@ This is a **full lab** that demonstrates how to operationalize **PCI DSS v4.0.1*
 
 ---
 
-## Toolkit Alignment (TWN Focus)
+## Toolkit Alignment (DevOps Focus)
 
-We intentionally keep to the TWN Demo Projects tooling family — **Terraform, AWS CLI, Docker, Jenkins, Python** — so you stay inside one mental model while you grow the lab. (The TWN Demo Projects index covers these pillars extensively.)
+We intentionally keep to the DevOps tooling family — **Terraform, AWS CLI, Docker, Jenkins, Python** — so you stay inside one mental model while you grow the lab. 
 
-> Reference: The TWN Demo Projects overview spans AWS, Terraform, Docker, Jenkins, Python modules and aligns with our selected tools for this lab. fileciteturn0file0
+> Reference: The DevOps tools overview spans AWS, Terraform, Docker, Jenkins, Python modules, and aligns with our selected tools for this lab. fileciteturn0file0
 
 ---
 
@@ -51,7 +51,7 @@ We intentionally keep to the TWN Demo Projects tooling family — **Terraform, A
   - **AWS CLI v2**, configured (`aws configure sso` or access keys)
   - **Python ≥ 3.11** with `boto3` installed
   - **(Optional) PowerShell 7+** on Windows jump hosts
-  - **(Optional) Docker** if you want to containerize collectors (TWN‑style)
+  - **(Optional) Docker** if you want to containerize collectors (DevOps‑style)
   - **(Optional) Jenkins** if you want to run collectors via CI
 
 - **Clone this repo** (or unzip the provided archive) to your workstation:
@@ -113,7 +113,7 @@ aws securityhub get-enabled-standards
 aws s3 ls s3://<YOUR-LOGS-BUCKET>
 ```
 
-> Tip (TWN‑style): Add remote state in S3 later (`terraform backend "s3"`), mirroring the “Configure a Shared Remote State” demo project.
+> Tip (DevOps style): Add remote state in S3 later (`terraform backend "s3"`), mirroring the “Configure a Shared Remote State” demo project.
 
 ---
 
@@ -149,7 +149,7 @@ You don’t need to pre‑create folders in S3; the collectors will write keys.
 ## Step 5 — Seed a Baseline with the Manual Python Collector (WHAT/WHY)
 
 **WHAT**: Capture first proof for **Req. 7/8/10**.  
-**WHY**: Establish starting posture; demonstrates that you can pull exact artifacts assessors ask for.
+**WHY**: Establish starting posture; demonstrates that you can pull the exact artifacts assessors ask for.
 
 ```bash
 cd evidence/collectors/python
@@ -227,14 +227,14 @@ Expected S3 keys:
 
 ---
 
-## Step 7 — Optional TWN‑Style CI Hooks (Lint & Collectors)
+## Step 7 — Optional DevOps‑Style CI Hooks (Lint & Collectors)
 
-Keeping with the TWN spirit, you can use **Jenkins** or **GitHub Actions** to run basic checks on every PR:
+Keeping with the DevOps spirit, you can use **Jenkins** or **GitHub Actions** to run basic checks on every PR:
 
 - **GitHub Actions** (already included): `.github/workflows/compliance-ci.yml`
   - `terraform fmt -check`
   - Python lint via `ruff`
-- **Jenkins**: mirror the TWN CI stages and add a simple stage that runs the Python collector in **read‑only** mode (no S3 upload) as a smoke test.
+- **Jenkins**: mirror the CI stages and add a simple stage that runs the Python collector in **read‑only** mode (no S3 upload) as a smoke test.
 
 **WHY**: Treat compliance like software. Everything changes through PRs, everything is tested.
 
@@ -338,4 +338,4 @@ terraform destroy
 
 ---
 
-**Author’s note**: This lab is designed to “cement a hiring decision” by proving you can *operationalize* PCI requirements with a TDevOps toolkit — a small set of tools, high leverage, lots of automation.
+**Author’s note**: This lab is designed to “cement a hiring decision” by proving you can *operationalize* PCI requirements with a DevOps toolkit — a small set of tools, high leverage, lots of automation.
