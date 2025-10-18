@@ -39,7 +39,7 @@ This is a **full lab** that demonstrates how to operationalize **PCI DSS v4.0.1*
 
 We intentionally keep to the DevOps tooling family — **Terraform, AWS CLI, Docker, Jenkins, Python** — so you stay inside one mental model while you grow the lab. 
 
-> Reference: The DevOps tools overview spans AWS, Terraform, Docker, Jenkins, Python modules, and aligns with our selected tools for this lab. fileciteturn0file0
+> Reference: The DevOps tools overview spans AWS, Terraform, Docker, Jenkins, Python modules, and aligns with our selected tools for this lab.
 
 ---
 
