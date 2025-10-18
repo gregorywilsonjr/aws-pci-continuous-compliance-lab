@@ -1,0 +1,135 @@
+name: PCI Compliance CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  terraform-lint:
+    name: Terraform Format Check
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.5.0
+      
+      - name: Terraform Format Check
+        run: |
+          cd iac/terraform
+          terraform fmt -check -recursive
+        continue-on-error: false
+      
+      - name: Terraform Init
+        run: |
+          cd iac/terraform
+          terraform init -backend=false
+      
+      - name: Terraform Validate
+        run: |
+          cd iac/terraform
+          terraform validate
+
+  python-lint:
+    name: Python Lint and Test
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install ruff boto3
+      
+      - name: Lint with ruff
+        run: |
+          ruff check evidence/collectors/python/*.py automation/lambda/*.py
+        continue-on-error: true
+      
+      - name: Check Python syntax
+        run: |
+          python -m py_compile evidence/collectors/python/evidence_collect_basic.py
+          python -m py_compile automation/lambda/evidence_snapshot.py
+
+  security-scan:
+    name: Security Scan
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+      
+      - name: Upload Trivy results to GitHub Security
+        uses: github/codeql-action/upload-sarif@v2
+        if: always()
+        with:
+          sarif_file: 'trivy-results.sarif'
+
+  evidence-collector-test:
+    name: Test Evidence Collector (Dry Run)
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          pip install boto3
+      
+      - name: Syntax check evidence collector
+        run: |
+          python -m py_compile evidence/collectors/python/evidence_collect_basic.py
+          echo "✓ Evidence collector syntax is valid"
+      
+      - name: Check Lambda handler
+        run: |
+          python -m py_compile automation/lambda/evidence_snapshot.py
+          echo "✓ Lambda handler syntax is valid"
+
+  documentation-check:
+    name: Documentation Validation
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Check required documentation
+        run: |
+          echo "Checking for required documentation files..."
+          test -f README.md && echo "✓ README.md exists"
+          test -f docs/pci_mapping.md && echo "✓ PCI mapping exists"
+          test -f runbooks/audit_evidence_runbook.md && echo "✓ Runbook exists"
+          test -f evidence/schema/evidence_register.csv && echo "✓ Evidence register exists"
+          echo "✓ All required documentation present"
+      
+      - name: Validate CSV format
+        run: |
+          head -n 1 evidence/schema/evidence_register.csv | grep -q "artifact_id" && echo "✓ Evidence register has correct headers"

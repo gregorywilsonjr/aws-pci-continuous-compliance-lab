@@ -1,0 +1,7 @@
+artifact_id,pci_requirement,control_intent,evidence_type,s3_key,collected_at,hash_sha256,reviewer,status,notes
+EV-001,Req. 8.3.1,Multi-Factor Authentication,IAM MFA Status,artifacts/baseline/YYYY-MM-DD/iam_mfa_status.json,,,,,Update with actual collection date
+EV-002,Req. 7.2.1,Least Privilege Access,IAM Role Policies,artifacts/baseline/YYYY-MM-DD/iam_role_policies.json,,,,,Update with actual collection date
+EV-003,Req. 10.2,Audit Trail Logging,CloudTrail Events,artifacts/baseline/YYYY-MM-DD/cloudtrail_recent_events.json,,,,,Update with actual collection date
+EV-004,Req. 1.2.1,Network Segmentation,Security Group Rules,artifacts/baseline/YYYY-MM-DD/security_groups.json,,,,,To be collected
+EV-005,Req. 2.2,Secure Configuration,Security Hub Findings,artifacts/daily/YYYY-MM-DD/securityhub_findings_summary.json,,,,,Automated daily
+EV-006,Req. 11.5.1,Change Detection,AWS Config Compliance,artifacts/daily/YYYY-MM-DD/aws_config_rules_brief.json,,,,,Automated daily

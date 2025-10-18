@@ -1,0 +1,28 @@
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+
+# Python
+__pycache__/
+*.pyc
+venv/
+env/
+
+# Git
+.git/
+.gitignore
+
+# Evidence artifacts
+*.json
+evidence/collectors/python/*.json
+
+# Documentation (not needed in container)
+docs/
+runbooks/
+README.md
+
+# CI/CD
+.github/
+Jenkinsfile

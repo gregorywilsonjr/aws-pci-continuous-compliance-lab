@@ -1,0 +1,8 @@
+# ============================================================================
+# Example Terraform Variables
+# Copy this to terraform.tfvars and customize
+# ============================================================================
+
+aws_region  = "us-west-2"
+environment = "lab"
+name_prefix = "pci-cc-lab"
