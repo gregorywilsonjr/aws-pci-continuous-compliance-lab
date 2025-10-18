@@ -22,7 +22,7 @@ This is a **full lab** that demonstrates how to operationalize **PCI DSS v4.0.1*
 |   ├─ EventBridge -> Lambda (daily snapshot to S3)            |
 |   └─ Manual Python Collector (MFA, IAM Policies, CloudTrail) |
 |                                                              |
-|  CI (optional, DevOps-style)                                    |
+|  CI (optional, DevOps-style)                                 |
 |   └─ GitHub Actions or Jenkins → Lint & run collectors       |
 +--------------------------------------------------------------+
 ```
