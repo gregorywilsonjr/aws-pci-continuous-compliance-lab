@@ -338,4 +338,4 @@ terraform destroy
 
 ---
 
-**Author’s note**: This lab is designed to “cement a hiring decision” by proving you can *operationalize* PCI requirements with a TWN‑style DevOps toolkit — small set of tools, high leverage, lots of automation.
+**Author’s note**: This lab is designed to “cement a hiring decision” by proving you can *operationalize* PCI requirements with a TDevOps toolkit — a small set of tools, high leverage, lots of automation.
