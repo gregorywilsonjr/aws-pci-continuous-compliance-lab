@@ -1,6 +1,0 @@
-aws_account_id = "498193834010"
-evidence_bucket_name = "pci-cc-lab-evidence-498193834010"
-evidence_lambda_role_arn = "arn:aws:iam::498193834010:role/pci-cc-lab-evidence-lambda-role"
-logs_bucket_name = "pci-cc-lab-logs-498193834010"
-private_subnet_id = "subnet-0c2c3425b3d04ad1f"
-vpc_id = "vpc-07312ac1bbde9b76f"

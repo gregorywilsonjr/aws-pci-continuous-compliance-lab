@@ -5,6 +5,7 @@
 *.tfplan
 .terraform.lock.hcl
 terraform.tfvars
+terraform_outputs.txt
 
 # Python
 __pycache__/
